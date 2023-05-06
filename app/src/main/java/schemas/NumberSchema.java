@@ -8,7 +8,7 @@ public class NumberSchema extends BaseSchema {
         this.isRequired = true;
         Predicate<Object> predicateRequired = x -> x instanceof Integer;
         super.addPredicate(predicateRequired);
-        return  this;
+        return this;
     }
     public final NumberSchema positive() {
         Predicate<Object> predicatePositive = x -> x instanceof Integer && (int) x > 0;

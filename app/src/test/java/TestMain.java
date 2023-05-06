@@ -1,7 +1,11 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import schemas.MapSchema;
 import schemas.NumberSchema;
 import schemas.StringSchema;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -10,12 +14,14 @@ public class TestMain {
     Validator validatorTest;
     StringSchema stringSchema;
     NumberSchema numberSchema;
+    MapSchema mapSchema;
 
     @BeforeEach
     public void init() {
         validatorTest = new Validator();
         stringSchema = validatorTest.string();
         numberSchema = validatorTest.number();
+        mapSchema = validatorTest.map();
     }
 
     @Test
@@ -26,17 +32,20 @@ public class TestMain {
         boolean actual3 = stringSchema.isValid(5);
         boolean actual4 = stringSchema.isValid("hexlet");
         boolean actual5 = numberSchema.isValid(null);
+        boolean actual6 = mapSchema.isValid(null);
         assertEquals(expected, actual1);
         assertEquals(expected, actual2);
         assertEquals(expected, actual3);
         assertEquals(expected, actual4);
         assertEquals(expected, actual5);
+        assertEquals(expected, actual6);
     }
 
     @Test
     public void afterRequiredTest() {
         stringSchema.required();
         numberSchema.required();
+        mapSchema.required();
         boolean expected1 = false;
         boolean expected2 = true;
         boolean actual1 = stringSchema.isValid("");
@@ -44,11 +53,15 @@ public class TestMain {
         boolean actual3 = stringSchema.isValid(5);
         boolean actual4 = stringSchema.isValid("hexlet");
         boolean actual5 = numberSchema.isValid(null);
+        boolean actual6 = mapSchema.isValid(null);
+        boolean actual7 = mapSchema.isValid(new HashMap<>());
         assertEquals(expected1, actual1);
         assertEquals(expected1, actual2);
         assertEquals(expected1, actual3);
         assertEquals(expected2, actual4);
         assertEquals(expected1, actual5);
+        assertEquals(expected1, actual6);
+        assertEquals(expected2, actual7);
     }
 
     @Test
@@ -63,7 +76,7 @@ public class TestMain {
     }
 
     @Test
-    public void addContains() {
+    public void addContainsTest() {
         stringSchema.required().contains("hex");
         boolean expected1 = true;
         boolean expected2 = false;
@@ -124,6 +137,21 @@ public class TestMain {
         assertEquals(expected2, actual1);
         assertEquals(expected1, actual2);
         assertEquals(expected2, actual3);
+    }
+
+    @Test
+    public void sizeOfTest() {
+        mapSchema.required().sizeOf(2);
+        Map<String, String> data = new HashMap<>();
+        data.put("key1", "value1");
+        data.put("key2", "value2");
+        boolean expected1 = true;
+        boolean expected2 = false;
+        boolean actual1 = mapSchema.isValid(data);
+        assertEquals(expected1, actual1);
+        data.put("key3", "value3");
+        boolean actual2 = mapSchema.isValid(data);
+        assertEquals(expected2, actual2);
     }
 
 }

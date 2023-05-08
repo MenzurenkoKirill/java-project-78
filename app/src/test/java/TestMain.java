@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import schemas.BaseSchema;
 import schemas.MapSchema;
 import schemas.NumberSchema;
 import schemas.StringSchema;
@@ -152,6 +153,36 @@ public class TestMain {
         data.put("key3", "value3");
         boolean actual2 = mapSchema.isValid(data);
         assertEquals(expected2, actual2);
+    }
+
+    @Test
+    public void shapeOfMapTest() {
+        Map<String, BaseSchema> schemas = new HashMap<>();
+        schemas.put("name", validatorTest.string().required());
+        schemas.put("age", validatorTest.number().positive());
+        mapSchema.shape(schemas);
+        Map<String, Object> human1 = new HashMap<>();
+        human1.put("name", "Kolya");
+        human1.put("age", 100);
+        Map<String, Object> human2 = new HashMap<>();
+        human2.put("name", "Maya");
+        human2.put("age", null);
+        Map<String, Object> human3 = new HashMap<>();
+        human3.put("name", "");
+        human3.put("age", null);
+        Map<String, Object> human4 = new HashMap<>();
+        human4.put("name", "Valya");
+        human4.put("age", -5);
+        boolean expected1 = true;
+        boolean expected2 = false;
+        boolean actual1 = mapSchema.isValid(human1);
+        boolean actual2 = mapSchema.isValid(human2);
+        boolean actual3 = mapSchema.isValid(human3);
+        boolean actual4 = mapSchema.isValid(human4);
+        assertEquals(expected1, actual1);
+        assertEquals(expected1, actual2);
+        assertEquals(expected2, actual3);
+        assertEquals(expected2, actual4);
     }
 
 }

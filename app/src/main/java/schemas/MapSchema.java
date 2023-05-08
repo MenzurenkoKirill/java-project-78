@@ -20,4 +20,19 @@ public class MapSchema extends BaseSchema {
     public boolean isInvalidData(Object value) {
         return !(value instanceof Map) || ((Map) value).isEmpty();
     }
+    public final MapSchema shape(Map<String, BaseSchema> schema) {
+        Predicate<Object> predicateShape = x -> validationOfMap(schema, (Map<?, ?>) x);
+        super.addPredicate(predicateShape);
+        return this;
+    }
+
+    private boolean validationOfMap(Map<String, BaseSchema> schemas, Map<?, ?> map) {
+        for (Map.Entry<String, BaseSchema> entry: schemas.entrySet()) {
+            String key = entry.getKey();
+            if (!map.containsKey(key) || !entry.getValue().isValid(map.get(key))) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

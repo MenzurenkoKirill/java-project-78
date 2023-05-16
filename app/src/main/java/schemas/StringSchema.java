@@ -5,7 +5,7 @@ import java.util.function.Predicate;
 public class StringSchema extends BaseSchema {
     public final StringSchema required() {
         this.isRequired = true;
-        Predicate<Object> predicateRequired = x -> x instanceof String && !x.equals("");
+        Predicate<Object> predicateRequired = x -> x instanceof String && !((String) x).isEmpty();
         super.addPredicate(predicateRequired);
         return  this;
     }
@@ -21,7 +21,7 @@ public class StringSchema extends BaseSchema {
     }
 
     @Override
-    public boolean isInvalidData(Object value) {
+    public boolean isEmptyData(Object value) {
         return !(value instanceof String) || ((String) value).isEmpty();
     }
 }

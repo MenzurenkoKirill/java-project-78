@@ -17,8 +17,8 @@ public class MapSchema extends BaseSchema {
     }
 
     @Override
-    public boolean isInvalidData(Object value) {
-        return !(value instanceof Map) || ((Map) value).isEmpty();
+    public boolean isEmptyData(Object value) {
+        return !(value instanceof Map);
     }
     public final MapSchema shape(Map<String, BaseSchema> schema) {
         Predicate<Object> predicateShape = x -> validationOfMap(schema, (Map<?, ?>) x);

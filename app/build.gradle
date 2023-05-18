@@ -22,17 +22,14 @@ test {
     useJUnitPlatform()
     finalizedBy jacocoTestReport
 }
-jacoco {
-    toolVersion = "0.8.8"
-    reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
-}
+
 jacocoTestReport {
+    dependsOn test
     reports {
-        xml.required = false
-        csv.required = false
-        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+        xml.enabled = true
     }
 }
+
 compileJava {
     options.release = 17
 }

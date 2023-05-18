@@ -21,7 +21,7 @@ public class StringSchema extends BaseSchema {
     }
 
     @Override
-    public boolean isEmptyData(Object value) {
+    public final boolean isEmptyData(Object value) {
         return !(value instanceof String) || ((String) value).isEmpty();
     }
 }

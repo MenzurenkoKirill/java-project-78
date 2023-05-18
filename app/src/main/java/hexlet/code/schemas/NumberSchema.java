@@ -21,7 +21,7 @@ public class NumberSchema extends BaseSchema {
         return  this;
     }
     @Override
-    public boolean isEmptyData(Object value) {
+    public final boolean isEmptyData(Object value) {
         return !(value instanceof Integer);
     }
 }

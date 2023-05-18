@@ -17,7 +17,7 @@ public class MapSchema extends BaseSchema {
     }
 
     @Override
-    public boolean isEmptyData(Object value) {
+    public final boolean isEmptyData(Object value) {
         return !(value instanceof Map);
     }
     public final MapSchema shape(Map<String, BaseSchema> schema) {

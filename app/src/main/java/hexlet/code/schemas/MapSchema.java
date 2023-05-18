@@ -10,7 +10,7 @@ public class MapSchema extends BaseSchema {
         super.addPredicate(predicateRequired);
         return this;
     }
-    public final MapSchema sizeOf(int sizeOfMap) {
+    public final MapSchema sizeof(int sizeOfMap) {
         Predicate<Object> predicateRange = x -> ((Map<?, ?>) x).size() == sizeOfMap;
         super.addPredicate(predicateRange);
         return  this;

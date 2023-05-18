@@ -100,7 +100,7 @@ public class ValidatorTest {
         boolean expected2 = false;
         assertEquals(expected2, actual2);
         assertEquals(expected1, actual3);
-        mapSchema.sizeOf(2);
+        mapSchema.sizeof(2);
         Map<String, String> data = new HashMap<>();
         data.put("key1", "value1");
         data.put("key2", "value2");
